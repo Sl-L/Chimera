@@ -11,7 +11,7 @@ CONSTANT PHI = 1.6180_3398_8749_8948;
 CONSTANT E =   2.7182_8182_8459_0452;
 
 
-BODY myCube = NEW CUBE (
+BODY myCube = NEW CUBE(
     SIDE = <float>;
     SIZE = {
         X = <float>,
@@ -46,7 +46,7 @@ BODY myCube = NEW CUBE (
     COLOR_HEX = <int>;
 );
 
-BODY mySphere = NEW SPHERE (
+BODY mySphere = NEW SPHERE(
     RADIUS = <float>;
     DIAMETER = <float>;
 
@@ -80,7 +80,7 @@ BODY mySphere = NEW SPHERE (
     COLOR_HEX = <int>;
 );
 
-BODY myCylinder = NEW CYLINDER (
+BODY myCylinder = NEW CYLINDER(
     RADIUS = <float>;
     DIAMETER = <float>;
 
@@ -121,3 +121,9 @@ BODY myCylinder = NEW CYLINDER (
     COLOR_HEX = <int>;
 );
 
+SURROUND(
+        OBJECT = <BODY>;
+        WITH = <BODY>;
+        AMOUNT = <int>;
+        CENTER = <bool>;
+);
