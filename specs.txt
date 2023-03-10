@@ -1,3 +1,7 @@
+// In-line comment
+/* Multi-line 
+comment */
+
 CONSTANT PI =  3.14159265359;
 CONSTANT PHI = 1.61803398875;
 CONSTANT E =   2.71828182846;
@@ -112,3 +116,4 @@ BODY myCylinder = NEW CYLINDER (
     };
     COLOR_HEX = <int>;
 );
+
