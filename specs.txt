@@ -2,9 +2,13 @@
 /* Multi-line 
 comment */
 
-CONSTANT PI =  3.14159265359;
-CONSTANT PHI = 1.61803398875;
-CONSTANT E =   2.71828182846;
+/*
+ '_' can be used when defining numbers to improve
+    readability of long numbers
+*/
+CONSTANT PI =  3.1415_9265_3589_7932;
+CONSTANT PHI = 1.6180_3398_8749_8948;
+CONSTANT E =   2.7182_8182_8459_0452;
 
 
 BODY myCube = NEW CUBE (
