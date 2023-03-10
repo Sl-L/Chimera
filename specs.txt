@@ -1,0 +1,194 @@
+CONSTANT PI =  3.14159265359;
+CONSTANT PHI = 1.61803398875;
+CONSTANT E =   2.71828182846;
+
+
+BODY myCube = NEW CUBE (
+    SIDE = <float>;
+    SIZE = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    };
+
+    POSITION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    };
+
+    ROTATION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>,
+        DEGREES = <float>,
+        ROTATION_VECTOR = {
+            X = <float>,
+            Y = <float>,
+            Z = <float>
+        };
+    };
+
+    CERNTER = <bool>;
+
+    COLOR = {
+        COLOR_NAME = <string>,
+        TRANSPARENCY = <int>
+    };
+    COLOR_HEX = <int>;
+);
+
+BODY mySphere = NEW SPHERE (
+    RADIUS = <float>;
+    DIAMETER = <float>;
+
+    POSITION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    };
+    
+    FRAGMENTS_ANGLE = <float>;
+    FRAGMENTS_SIZE = <float>;
+    RESOLUTION = <float>;
+    CERNTERED = <bool>;
+
+    ROTATION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>,
+        DEGREES = <float>,
+        ROTATION_VECTOR = {
+            X = <float>,
+            Y = <float>,
+            Z = <float>
+        };
+    };
+
+    COLOR = {
+        COLOR_NAME = <string>,
+        TRANSPARENCY = <int>
+    };
+    COLOR_HEX = <int>;
+);
+
+BODY myCylinder = NEW CYLINDER (
+    RADIUS = <float>;
+    DIAMETER = <float>;
+
+    RADIUS_BOTTOM = <float>;
+    RADIUS_TOP = <float>;
+    DIAMETER_BOTTOM = <float>;
+    DIAMETER_TOP = <float>;
+
+    POSITION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    };
+    
+    FRAGMENTS_ANGLE = <float>;
+    FRAGMENTS_SIZE = <float>;
+    RESOLUTION = <float>;
+    CERNTERED = <bool>;
+
+    ROTATION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>,
+        DEGREES = <float>,
+        ROTATION_VECTOR = {
+            X = <float>,
+            Y = <float>,
+            Z = <float>
+        };
+    };
+    
+    CENTER = <bool>;
+
+    COLOR = {
+        COLOR_NAME = <string>,
+        TRANSPARENCY = <int>
+    };
+    COLOR_HEX = <int>;
+);
+
+BODY myPolyedron = NEW POLYEDRON (
+    POINTS = {
+        P0 = {
+            X = <float>;
+            Y = <float>;
+            Z = <float>;
+        };
+        P1 = {
+            X = <float>;
+            Y = <float>;
+            Z = <float>;
+        };
+        P2 = {
+            X = <float>;
+            Y = <float>;
+            Z = <float>;
+        };
+        P3 = {
+            X = <float>;
+            Y = <float>;
+            Z = <float>;
+        };
+        //You may continue at your heart's desire or your mind's demise, whichever comes first...
+    };
+
+    //Faces are made with the points
+    FACES = {
+        F1 = {
+            <POINT>,
+            <POINT>,
+            <POINT>
+            //You may continue at your heart's desire or your mind's demise, whichever comes first... 
+        };
+        F2 = {
+            <POINT>,
+            <POINT>,
+            <POINT>
+            //You may continue at your heart's desire or your mind's demise, whichever comes first... 
+        };
+        F3 = {
+            <POINT>,
+            <POINT>,
+            <POINT>
+            //You may continue at your heart's desire or your mind's demise, whichever comes first... 
+        };
+        F4 = {
+            <POINT>,
+            <POINT>,
+            <POINT>
+            //You may continue at your heart's desire or your mind's demise, whichever comes first... 
+        };
+        //You may continue at your heart's desire or your mind's demise, whichever comes first... 
+    };
+    POSITION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    };
+
+    ROTATION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>,
+        DEGREES = <float>,
+        ROTATION_VECTOR = {
+            X = <float>,
+            Y = <float>,
+            Z = <float>
+        };
+    };
+    
+    CENTER = <bool>;
+
+    COLOR = {
+        COLOR_NAME = <string>,
+        TRANSPARENCY = <int>
+    };
+    COLOR_HEX = <int>;
+); 
