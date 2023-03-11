@@ -11,7 +11,7 @@ let CONSTANT float PHI = 1.6180_3398_8749_8948;
 let CONSTANT float E =   2.7182_8182_8459_0452;
 
 
-let BODY myCube = NEW CUBE(
+let BODY myCube = CUBE(
     SIDE = <float>,
     SIZE = {
         X = <float>,
@@ -46,7 +46,7 @@ let BODY myCube = NEW CUBE(
     COLOR_HEX = <int>
 );
 
-let BODY mySphere = NEW SPHERE(
+let BODY mySphere = SPHERE(
     RADIUS = <float>,
     DIAMETER = <float>,
 
@@ -80,7 +80,7 @@ let BODY mySphere = NEW SPHERE(
     COLOR_HEX = <int>
 );
 
-let BODY myCylinder = NEW CYLINDER(
+let BODY myCylinder = CYLINDER(
     RADIUS = <float>,
     DIAMETER = <float>,
 
