@@ -151,6 +151,7 @@ ROTATE <BODY>(
     }
 );
 
+//Shorthand for creating and placing an ENCIRCLEMENT
 SURROUND(
         OBJECT = <BODY>,
         WITH = <BODY>,
