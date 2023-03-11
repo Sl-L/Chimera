@@ -125,5 +125,7 @@ SURROUND(
         OBJECT = <BODY>;
         WITH = <BODY>;
         AMOUNT = <int>;
+        OFFSET_ANGLE = <int>;
+        OFFSET_COUNT = <int>;
         CENTER = <bool>;
 );
