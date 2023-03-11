@@ -6,9 +6,9 @@ comment */
  '_' can be used when defining numbers to improve
     readability of long numbers
 */
-let CONSTANT PI =  3.1415_9265_3589_7932;
-let CONSTANT PHI = 1.6180_3398_8749_8948;
-let CONSTANT E =   2.7182_8182_8459_0452;
+let CONSTANT float PI =  3.1415_9265_3589_7932;
+let CONSTANT float PHI = 1.6180_3398_8749_8948;
+let CONSTANT float E =   2.7182_8182_8459_0452;
 
 
 let BODY myCube = NEW CUBE(
