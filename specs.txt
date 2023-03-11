@@ -11,7 +11,7 @@ CONSTANT float PHI = 1.6180_3398_8749_8948;
 CONSTANT float E =   2.7182_8182_8459_0452;
 
 
-let BODY myCube = CUBE(
+BODY myCube = CUBE(
     SIDE = <float>,
     SIZE = {
         X = <float>,
@@ -46,7 +46,7 @@ let BODY myCube = CUBE(
     COLOR_HEX = <int>
 );
 
-let BODY mySphere = SPHERE(
+BODY mySphere = SPHERE(
     RADIUS = <float>,
     DIAMETER = <float>,
 
@@ -80,7 +80,7 @@ let BODY mySphere = SPHERE(
     COLOR_HEX = <int>
 );
 
-let BODY myCylinder = CYLINDER(
+BODY myCylinder = CYLINDER(
     RADIUS = <float>,
     DIAMETER = <float>,
 
@@ -121,11 +121,41 @@ let BODY myCylinder = CYLINDER(
     COLOR_HEX = <int>
 );
 
+BODY myEncirclement = ENCIRCLEMENT(
+    OBJECT = <BODY>,
+    WITH = <BODY>,
+    AMOUNT = <int>,
+    OFFSET_ANGLE = <int>,
+    OFFSET_COUNT = <int>,
+    CENTER = <bool>
+)
+
+//Places <BODY> on the scene, allows the same <BODY> to be reused
+PLACE <BODY>;
+
+MOVE <BODY>(
+    X = <float>,
+    Y = <float>,
+    Z = <float>
+);
+
+ROTATE <BODY>(
+    X = <float>,
+    Y = <float>,
+    Z = <float>,
+    DEGREES = <float>,
+    ROTATION_VECTOR = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    }
+);
+
 SURROUND(
         OBJECT = <BODY>,
         WITH = <BODY>,
         AMOUNT = <int>,
         OFFSET_ANGLE = <int>,
         OFFSET_COUNT = <int>,
-        CENTER = <bool>,
+        CENTER = <bool>
 );
