@@ -38,7 +38,7 @@ BODY myCube = CUBE(
         },
     },
 
-    CERNTER = <bool>,
+    CENTER = <bool>,
 
     COLOR = {
         COLOR_NAME = <str>,
@@ -60,7 +60,6 @@ BODY mySphere = SPHERE(
     FRAGMENTS_ANGLE = <float>,
     FRAGMENTS_SIZE = <float>,
     RESOLUTION = <float>,
-    CERNTERED = <bool>,
 
     ROTATION = {
         X = <float>,
@@ -99,7 +98,7 @@ BODY myCylinder = CYLINDER(
     FRAGMENTS_ANGLE = <float>,
     FRAGMENTS_SIZE = <float>,
     RESOLUTION = <float>,
-    CERNTERED = <bool>,
+    CENTER = <bool>,
 
     ROTATION = {
         X = <float>,
@@ -112,8 +111,6 @@ BODY myCylinder = CYLINDER(
             Z = <float>
         },
     },
-    
-    CENTER = <bool>,
 
     COLOR = {
         COLOR_NAME = <str>,
@@ -128,7 +125,6 @@ BODY myEncirclement = ENCIRCLEMENT(
     AMOUNT = <int>,
     OFFSET_ANGLE = <int>,
     OFFSET_COUNT = <int>,
-    CENTER = <bool>
 )
 
 //Places <BODY> on the scene, allows the same <BODY> to be reused
