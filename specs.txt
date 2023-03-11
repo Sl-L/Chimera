@@ -42,7 +42,7 @@ BODY myCube = CUBE(
 
     COLOR = {
         COLOR_NAME = <str>,
-        TRANSPARENCY = <int>
+        OPACITY = <int>
     },
     COLOR_HEX = <int>
 );
@@ -75,7 +75,7 @@ BODY mySphere = SPHERE(
 
     COLOR = {
         COLOR_NAME = <str>,
-        TRANSPARENCY = <int>
+        OPACITY = <int>
     },
     COLOR_HEX = <int>
 );
@@ -114,7 +114,7 @@ BODY myCylinder = CYLINDER(
 
     COLOR = {
         COLOR_NAME = <str>,
-        TRANSPARENCY = <int>
+        OPACITY = <int>
     },
     COLOR_HEX = <int>
 );
