@@ -12,18 +12,18 @@ CONSTANT E =   2.7182_8182_8459_0452;
 
 
 BODY myCube = NEW CUBE(
-    SIDE = <float>;
+    SIDE = <float>,
     SIZE = {
         X = <float>,
         Y = <float>,
         Z = <float>
-    };
+    },
 
     POSITION = {
         X = <float>,
         Y = <float>,
         Z = <float>
-    };
+    },
 
     ROTATION = {
         X = <float>,
@@ -34,32 +34,32 @@ BODY myCube = NEW CUBE(
             X = <float>,
             Y = <float>,
             Z = <float>
-        };
-    };
+        },
+    },
 
-    CERNTER = <bool>;
+    CERNTER = <bool>,
 
     COLOR = {
         COLOR_NAME = <string>,
         TRANSPARENCY = <int>
-    };
-    COLOR_HEX = <int>;
+    },
+    COLOR_HEX = <int>
 );
 
 BODY mySphere = NEW SPHERE(
-    RADIUS = <float>;
-    DIAMETER = <float>;
+    RADIUS = <float>,
+    DIAMETER = <float>,
 
     POSITION = {
         X = <float>,
         Y = <float>,
         Z = <float>
-    };
+    },
     
-    FRAGMENTS_ANGLE = <float>;
-    FRAGMENTS_SIZE = <float>;
-    RESOLUTION = <float>;
-    CERNTERED = <bool>;
+    FRAGMENTS_ANGLE = <float>,
+    FRAGMENTS_SIZE = <float>,
+    RESOLUTION = <float>,
+    CERNTERED = <bool>,
 
     ROTATION = {
         X = <float>,
@@ -70,35 +70,35 @@ BODY mySphere = NEW SPHERE(
             X = <float>,
             Y = <float>,
             Z = <float>
-        };
-    };
+        },
+    },
 
     COLOR = {
         COLOR_NAME = <string>,
         TRANSPARENCY = <int>
-    };
-    COLOR_HEX = <int>;
+    },
+    COLOR_HEX = <int>
 );
 
 BODY myCylinder = NEW CYLINDER(
-    RADIUS = <float>;
-    DIAMETER = <float>;
+    RADIUS = <float>,
+    DIAMETER = <float>,
 
-    RADIUS_BOTTOM = <float>;
-    RADIUS_TOP = <float>;
-    DIAMETER_BOTTOM = <float>;
-    DIAMETER_TOP = <float>;
+    RADIUS_BOTTOM = <float>,
+    RADIUS_TOP = <float>,
+    DIAMETER_BOTTOM = <float>,
+    DIAMETER_TOP = <float>,
 
     POSITION = {
         X = <float>,
         Y = <float>,
         Z = <float>
-    };
+    },
     
-    FRAGMENTS_ANGLE = <float>;
-    FRAGMENTS_SIZE = <float>;
-    RESOLUTION = <float>;
-    CERNTERED = <bool>;
+    FRAGMENTS_ANGLE = <float>,
+    FRAGMENTS_SIZE = <float>,
+    RESOLUTION = <float>,
+    CERNTERED = <bool>,
 
     ROTATION = {
         X = <float>,
@@ -109,23 +109,23 @@ BODY myCylinder = NEW CYLINDER(
             X = <float>,
             Y = <float>,
             Z = <float>
-        };
-    };
+        },
+    },
     
-    CENTER = <bool>;
+    CENTER = <bool>,
 
     COLOR = {
         COLOR_NAME = <string>,
         TRANSPARENCY = <int>
-    };
-    COLOR_HEX = <int>;
+    },
+    COLOR_HEX = <int>
 );
 
 SURROUND(
-        OBJECT = <BODY>;
-        WITH = <BODY>;
-        AMOUNT = <int>;
-        OFFSET_ANGLE = <int>;
-        OFFSET_COUNT = <int>;
-        CENTER = <bool>;
+        OBJECT = <BODY>,
+        WITH = <BODY>,
+        AMOUNT = <int>,
+        OFFSET_ANGLE = <int>,
+        OFFSET_COUNT = <int>,
+        CENTER = <bool>,
 );
