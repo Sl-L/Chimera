@@ -40,7 +40,7 @@ let BODY myCube = NEW CUBE(
     CERNTER = <bool>,
 
     COLOR = {
-        COLOR_NAME = <string>,
+        COLOR_NAME = <str>,
         TRANSPARENCY = <int>
     },
     COLOR_HEX = <int>
@@ -74,7 +74,7 @@ let BODY mySphere = NEW SPHERE(
     },
 
     COLOR = {
-        COLOR_NAME = <string>,
+        COLOR_NAME = <str>,
         TRANSPARENCY = <int>
     },
     COLOR_HEX = <int>
@@ -115,7 +115,7 @@ let BODY myCylinder = NEW CYLINDER(
     CENTER = <bool>,
 
     COLOR = {
-        COLOR_NAME = <string>,
+        COLOR_NAME = <str>,
         TRANSPARENCY = <int>
     },
     COLOR_HEX = <int>
