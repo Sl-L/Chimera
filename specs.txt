@@ -130,6 +130,9 @@ BODY myEncirclement = ENCIRCLEMENT(
 //Places <BODY> on the scene, allows the same <BODY> to be reused
 PLACE(
     OBJECT = <BODY>;
+    X = <float>,
+    Y = <float>,
+    Z = <float> 
 );
 
 MOVE(
@@ -156,8 +159,11 @@ ROTATE(
 SURROUND(
         OBJECT = <BODY>,
         WITH = <BODY>,
+        X = <float>,
+        Y = <float>,
+        Z = <float>
         AMOUNT = <int>,
-        OFFSET_ANGLE = <int>,
-        OFFSET_COUNT = <int>,
+        OFFSET_ANGLE = <float>,
+        OFFSET_COUNT = <float>,
         CENTER = <bool>
 );
