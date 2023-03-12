@@ -1,5 +1,77 @@
 import re
 
+commands_list: list = [
+    "LET",
+    "CONSTANT",
+    "BODY",
+    "MOVE",
+    "ROTATE",
+    "SURROUND"
+]
+
+body_list: list = [
+    "CUBE",
+    "SPHERE",
+    "CYLINDER",
+    "ENCIRCLEMENT"
+]
+
+type_list: list = [
+    "int",
+    "float",
+    "str",
+    "bool"
+]
+
+"""
+ nType can be:
+    - "VAR"
+        - "constant"
+        - "mutable"
+        - "type"
+        - "name"
+        - "value"
+    - "BODY"
+        - "CUBE"
+        - "SPHERE"
+        - "CYLINDER"
+        - "ENCIRCLEMENT"
+    - "OP"
+        - "PLACE"
+        - "MOVE"
+        - "ROTATE"
+        - "SURROUND"
+"""
+class Node:
+    def __init__(self, id: int, nType: str) -> None:
+        self.id = id
+        self.nType = nType
+
+class VAR:
+    def __init__(self, is_const: bool, vType: type, name: str, value) -> None:
+        self.is_const = is_const
+        self.vType = type
+        self.name = name
+        self.value = value
+    
+    def __add__(self, VAR):
+        return self.value + VAR.value
+    
+    def __mul__(self, VAR):
+        return self.value * VAR.value
+
+    def le__(self, value):
+        return self.value <= value
+        
+    def __pow__(self, value, mod):
+        return pow(self.value, value, mod)
+        
+    def __lt__(self, value):
+        return self.value < value
+        
+    def __mod__(self, value):
+        return self.value % value
+
 class BODY:
     def __init__(self,
                 POSITION=[0, 0, 0],
@@ -114,41 +186,76 @@ class ENCIRCLEMENT:
         self.OFFSET_ANGLE = OFFSET_ANGLE
         self.OFFSET_COUNT = OFFSET_COUNT
 
+class OP:
+    def __init__(self, OBJECT: BODY, X: float, Y: float, Z: float) -> None:
+        self.OBJECT = OBJECT
+        self.X = X
+        self.Y = Y
+        self.Z = Z
+
+class PLACE(OP):
+    def __init__(self, OBJECT: BODY, X: float, Y: float, Z: float) -> None:
+        super().__init__(OBJECT, X, Y, Z)
+
+class MOVE(OP):
+    def __init__(self,
+                OBJECT: BODY,
+                X: float,
+                Y: float,
+                Z: float
+                ) -> None:
+
+        super().__init__(OBJECT, X, Y, Z)
+
+class ROTATE(OP):
+    def __init__(self,
+                OBJECT: BODY,
+                X: float,
+                Y: float,
+                Z: float,
+                DEGREES: float,
+                ROTATION_VECTOR: list
+                ) -> None:
+
+        super().__init__(OBJECT, X, Y, Z)
+        DEGREES = DEGREES
+        ROTATION_VECTOR = ROTATION_VECTOR
+
+class SURROUND(OP):
+    def __init__(self,
+                OBJECT: BODY,
+                X: float,
+                Y: float,
+                Z: float,
+                WITH: BODY,
+                AMOUNT: int,
+                OFFSET_ANGLE: float,
+                OFFSET_COUNT: float,
+                CENTER: bool
+                ) -> None:
+
+        super().__init__(OBJECT, X, Y, Z)
+        self.WITH = WITH
+        self.AMOUNT = AMOUNT
+        self.OFFSET_ANGLE = OFFSET_ANGLE
+        self.OFFSET_COUNT = OFFSET_COUNT
+        self.CENTER = CENTER
+
 def to_or_regex(args: list) -> str:
     string = "|".join(args)
     regex = f"({string})"
     return regex
 
-commands_list: list = [
-    "LET",
-    "CONSTANT",
-    "BODY",
-    "MOVE",
-    "ROTATE",
-    "SURROUND"
-]
+types: str = to_or_regex(type_list)
+variable_regex: str = f"(LET|CONSTANT)\s+{types}\s+([A-z][A-z0-9]*)\s+=\s([\s\S]*?);"
 
-body_list: list = [
-    "CUBE",
-    "SPHERE",
-    "CYLINDER",
-    "ENCIRCLEMENT"
-]
+bodies: str = to_or_regex(body_list)
+body_regex: str = f"(BODY)\s+([A-z][A-z0-9]*)\s+=\s+{bodies}([\s\S]*?);"
 
-type_list: list = [
-    "int",
-    "float",
-    "str",
-    "bool"
-]
+plain_arg_regex: str = "([A-z]+)\s+=\s+([A-z0-9\.]+),?"
+nested_arg_regex: str = "([A-z]+)\s+=\s*\{([\s\S]*?)\},?"
 
-types = to_or_regex(type_list)
-variable_regex = f"(LET|CONSTANT)\s+{types}\s+([A-z][A-z0-9]*)\s+=\s([\s\S]*?);"
-
-bodies = to_or_regex(body_list)
-body_regex = f"(BODY)\s+([A-z][A-z0-9]*)\s+=\s+{bodies}([\s\S]*?);"
-
-comment_regex = "(/\*[\s\S]*?\*/)|(\/\/.*)"
+comment_regex: str = "(/\*[\s\S]*?\*/)|(\/\/.*)"
 
 if __name__ == '__main__':
     with open('source.chimera', 'r') as file:
@@ -160,5 +267,9 @@ if __name__ == '__main__':
         for group in match:
             contents = contents.replace(group, "")
     
-    [print(i) for i in re.findall(variable_regex, contents)]
-    [print(i) for i in re.findall(body_regex, contents)]
+    v = re.findall(variable_regex, contents)
+    b = re.findall(body_regex, contents)
+
+    print(b)
+    print(v)
+
