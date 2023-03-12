@@ -143,10 +143,10 @@ type_list: list = [
 ]
 
 types = to_or_regex(type_list)
-variable_regex = f"((LET|CONSTANT)\s+{types}\s+([A-z]([A-z]|[0-9])*)\s+=\s([\s\S]*?);"
+variable_regex = f"(LET|CONSTANT)\s+{types}\s+([A-z][A-z0-9]*)\s+=\s([\s\S]*?);"
 
 bodies = to_or_regex(body_list)
-body_regex = f"(BODY)\s+([A-z]([A-z]|[0-9])*)\s+=\s+({bodies})([\s\S]*?);"
+body_regex = f"(BODY)\s+([A-z][A-z0-9]*)\s+=\s+{bodies}([\s\S]*?);"
 
 comment_regex = "(/\*[\s\S]*?\*/)|(\/\/.*)"
 
@@ -159,3 +159,6 @@ if __name__ == '__main__':
     for match in comments:
         for group in match:
             contents = contents.replace(group, "")
+    
+    [print(i) for i in re.findall(variable_regex, contents)]
+    [print(i) for i in re.findall(body_regex, contents)]
