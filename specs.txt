@@ -6,9 +6,9 @@ comment */
  '_' can be used when defining numbers to improve
     readability of long numbers
 */
-LET CONSTANT float PI =  3.1415_9265_3589_7932;
-LET CONSTANT float PHI = 1.6180_3398_8749_8948;
-LET CONSTANT float E =   2.7182_8182_8459_0452;
+CONSTANT float PI =  3.1415_9265_3589_7932;
+CONSTANT float PHI = 1.6180_3398_8749_8948;
+CONSTANT float E =   2.7182_8182_8459_0452;
 
 LET float spin = PI * 2;
 
