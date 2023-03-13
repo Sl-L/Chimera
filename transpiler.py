@@ -1,4 +1,86 @@
 import re
+import queue
+
+tokens: dict = {
+    0: {
+        "LET",
+        "CONSTANT"
+    },
+    1: {
+        "MOVE",
+        "ROTATE",
+        "SURROUND"
+    },
+    10: {
+        "BODY",
+        "int",
+        "float",
+        "str",
+        "bool"
+    },
+    11: {
+        "X",
+        "Y",
+        "Z",
+        "WITH",
+        "AMOUNT",
+        "OBJECT",
+        "CENTER",
+        "DEGREES",
+        "OFFSET_ANGLE",
+        "OFFSET_COUNT",
+        "ROTATION_VECTOR"
+    },
+    20: {
+        "[A-z][A-z0-9]*"
+    },
+    21: {
+        "X",
+        "Y",
+        "Z",
+        float,
+        int,
+        bool
+    },
+    30: {
+        "CUBE",
+        "SPHERE",
+        "CYLINDER",
+        "ENCIRCLEMENT"
+    },
+    31: {
+        float,
+        int,
+        bool
+    },
+    40: {
+        "SIDE",
+        "SIZE",
+        "POSITION",
+        "ROTATION",
+        "CENTER",
+        "COLOR",
+        "COLOR_HEX"
+    },
+    50: {
+        "X",
+        "Y",
+        "Z",
+        "DEGREES",
+        "ROTATION_VECTOR",
+        "COLOR_NAME",
+        "OPACITY",
+        float,
+        int,
+        bool,
+    },
+    60: {
+        float,
+        int,
+        bool,
+        str
+    }
+}
 
 commands_list: list = [
     "LET",
@@ -43,9 +125,41 @@ type_list: list = [
         - "SURROUND"
 """
 class Node:
-    def __init__(self, id: int, nType: str) -> None:
+    def __init__(self, id: int, nType: str, value) -> None:
         self.id = id
         self.nType = nType
+        self.value = value
+
+class LexicalAnalyser:
+    def __init__(self) -> None:
+        self.comment_regex: str = "(/\*[\s\S]*?\*/)|(\/\/.*)"
+        self.code: str = str()
+        self.commands: list = list()
+
+    def extract_source(self, source: str="source.chimera") -> None:
+        with open(source, 'r') as file:
+            contents: str = file.read()
+            file.close()
+        
+        comments = re.findall(self.comment_regex, contents)
+        for match in comments:
+            for group in match:
+                contents = contents.replace(group, "")
+        self.code = contents
+
+    # Replaces multiple spaces with single spaces, then separates the code by semicolons
+    # and, at last, makes nested lists by separating further by spaces, as well as 
+    # filtering out the empty strings
+    def extract_commands(self) -> None:
+        if len(self.code) == 0:
+            raise RuntimeError("Nothing to extract, code is empty")
+        else:
+            commands = re.sub("\s+", " ", self.code).split(";")
+            self.commands = [list(filter(None, i.split(" "))) for i in commands]
+    
+    # def tokenize(self) -> None:
+
+    # def lexical_analysis(self, sorce: str="source.chimera")
 
 class VAR:
     def __init__(self, is_const: bool, vType: type, name: str, value) -> None:
@@ -246,30 +360,14 @@ def to_or_regex(args: list) -> str:
     regex = f"({string})"
     return regex
 
-types: str = to_or_regex(type_list)
-variable_regex: str = f"(LET|CONSTANT)\s+{types}\s+([A-z][A-z0-9]*)\s+=\s([\s\S]*?);"
+# types: str = to_or_regex(type_list)
+# variable_regex: str = f"(LET|CONSTANT)\s+{types}\s+([A-z][A-z0-9]*)\s+=\s([\s\S]*?);"
 
-bodies: str = to_or_regex(body_list)
-body_regex: str = f"(BODY)\s+([A-z][A-z0-9]*)\s+=\s+{bodies}([\s\S]*?);"
+# bodies: str = to_or_regex(body_list)
+# body_regex: str = f"(BODY)\s+([A-z][A-z0-9]*)\s+=\s+{bodies}([\s\S]*?);"
 
-plain_arg_regex: str = "([A-z]+)\s+=\s+([A-z0-9\.]+),?"
-nested_arg_regex: str = "([A-z]+)\s+=\s*\{([\s\S]*?)\},?"
-
-comment_regex: str = "(/\*[\s\S]*?\*/)|(\/\/.*)"
+# plain_arg_regex: str = "([A-z]+)\s+=\s+([A-z0-9\.]+),?"
+# nested_arg_regex: str = "([A-z]+)\s+=\s*\{([\s\S]*?)\},?"
 
 if __name__ == '__main__':
-    with open('source.chimera', 'r') as file:
-        contents: str = file.read()
-        file.close()
-    
-    comments = re.findall(comment_regex, contents)
-    for match in comments:
-        for group in match:
-            contents = contents.replace(group, "")
-    
-    v = re.findall(variable_regex, contents)
-    b = re.findall(body_regex, contents)
-
-    print(b)
-    print(v)
-
+    pass
