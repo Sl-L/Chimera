@@ -12,7 +12,7 @@ LET CONSTANT float E =   2.7182_8182_8459_0452;
 
 LET float spin = PI * 2;
 
-BODY myCube = CUBE(
+LET BODY myCube = CUBE(
     SIDE = <float>,
     SIZE = {
         X = <float>,
@@ -47,7 +47,7 @@ BODY myCube = CUBE(
     COLOR_HEX = <int>
 );
 
-BODY mySphere = SPHERE(
+LET BODY mySphere = SPHERE(
     RADIUS = <float>,
     DIAMETER = <float>,
 
@@ -80,7 +80,7 @@ BODY mySphere = SPHERE(
     COLOR_HEX = <int>
 );
 
-BODY myCylinder = CYLINDER(
+LET BODY myCylinder = CYLINDER(
     RADIUS = <float>,
     DIAMETER = <float>,
 
@@ -119,7 +119,7 @@ BODY myCylinder = CYLINDER(
     COLOR_HEX = <int>
 );
 
-BODY myEncirclement = ENCIRCLEMENT(
+LET BODY myEncirclement = ENCIRCLEMENT(
     OBJECT = <BODY>,
     WITH = <BODY>,
     AMOUNT = <int>,
