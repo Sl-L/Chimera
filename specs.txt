@@ -165,5 +165,4 @@ SURROUND(
         AMOUNT = <int>,
         OFFSET_ANGLE = <float>,
         OFFSET_COUNT = <float>,
-        CENTER = <bool>
 );
