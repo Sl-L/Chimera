@@ -120,9 +120,11 @@ LET BODY myCylinder = CYLINDER(
 );
 
 LET BODY myEncirclement = ENCIRCLEMENT(
-    X = <float>,
-    Y = <float>,
-    Z = <float>,
+    POSITION = {
+        X = <float>,
+        Y = <float>,
+        Z = <float>
+    },
     OBJECT = <BODY>,
     WITH = <BODY>,
     AMOUNT = <int>,
