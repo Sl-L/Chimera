@@ -1,134 +1,136 @@
 import re
 import queue
 
-tokens: dict = {
-    0: {
-        "LET",
-        "CONSTANT"
-    },
-    1: {
-        "MOVE",
-        "ROTATE",
-        "SURROUND"
-    },
-    10: {
-        "BODY",
-        "int",
-        "float",
-        "str",
-        "bool"
-    },
-    11: {
-        "X",
-        "Y",
-        "Z",
-        "WITH",
-        "AMOUNT",
-        "OBJECT",
-        "CENTER",
-        "DEGREES",
-        "OFFSET_ANGLE",
-        "OFFSET_COUNT",
-        "ROTATION_VECTOR"
-    },
-    20: {
-        "[A-z][A-z0-9]*"
-    },
-    21: {
-        "X",
-        "Y",
-        "Z",
-        float,
-        int,
-        bool
-    },
-    30: {
-        "CUBE",
-        "SPHERE",
-        "CYLINDER",
-        "ENCIRCLEMENT"
-    },
-    31: {
-        float,
-        int,
-        bool
-    },
-    40: {
-        "SIDE",
-        "SIZE",
-        "POSITION",
-        "ROTATION",
-        "CENTER",
-        "COLOR",
-        "COLOR_HEX"
-    },
-    50: {
-        "X",
-        "Y",
-        "Z",
-        "DEGREES",
-        "ROTATION_VECTOR",
-        "COLOR_NAME",
-        "OPACITY",
-        float,
-        int,
-        bool,
-    },
-    60: {
-        float,
-        int,
-        bool,
-        str
-    }
+varNameRegex: str = "[A-z][A-z0-9]*"
+intRegex: int = "((\d)(_(?=\d))*)+"
+floatRegex: str = "(\d(_(?=\d))*)+\.?(\d(_(?=\d))*)*"
+boolRegex: str = "(T|t|F|f)(alse|ALSE|rue|RUE)"
+hexRegex: str = "(#)?(([0-9A-Fa-f])(_(?=[0-9A-Fa-f]))*)+"
+
+primitiveDict: dict = {
+    "int": intRegex,
+    "float": floatRegex,
+    "bool": boolRegex,
+    "hex": hexRegex,
+    "str": "[\s\S]*"
 }
 
-commands_list: list = [
-    "LET",
-    "CONSTANT",
-    "BODY",
-    "MOVE",
-    "ROTATE",
-    "SURROUND"
-]
+colorDict: dict = {
+    "COLOR_NAME": "[A-z]+",
+    "OPACITY": floatRegex,
+}
 
-body_list: list = [
-    "CUBE",
-    "SPHERE",
-    "CYLINDER",
-    "ENCIRCLEMENT"
-]
+rotationDict: dict = {
+    "X": floatRegex,
+    "Y": floatRegex,
+    "Z": floatRegex,
+    "DEGREES": floatRegex,
+        "ROTATION_VECTOR": {
+            "X": floatRegex,
+            "Y": floatRegex,
+            "Z": floatRegex
+        }
+}
 
-type_list: list = [
-    "int",
-    "float",
-    "str",
-    "bool"
-]
+positionDict: dict = {
+    "X": floatRegex,
+    "Y": floatRegex,
+    "Z": floatRegex
+}
 
-"""
- nType can be:
-    - "VAR"
-        - "constant"
-        - "mutable"
-        - "type"
-        - "name"
-        - "value"
-    - "BODY"
-        - "CUBE"
-        - "SPHERE"
-        - "CYLINDER"
-        - "ENCIRCLEMENT"
-    - "OP"
-        - "PLACE"
-        - "MOVE"
-        - "ROTATE"
-        - "SURROUND"
-"""
-class Node:
-    def __init__(self, id: int, nType: str, value) -> None:
-        self.id = id
-        self.nType = nType
-        self.value = value
+tokens: dict = {
+    "LET": {
+        "BODY": {
+            varNameRegex: {
+                "CUBE": {
+                    "SIDE": floatRegex,
+                    "SIZE": positionDict,
+                    "POSITION": positionDict,
+                    "ROTATION": rotationDict,
+                    "CENTER": boolRegex,
+                    "COLOR": colorDict,
+                    "COLOR_HEX": hexRegex
+                },
+                "SPHERE": {
+                    "RADIUS": floatRegex,
+                    "DIAMETER": floatRegex,
+                    "POSITION": positionDict,
+                    "FRAGMENTS_ANGLE": floatRegex,
+                    "FRAGMENTS_SIZE": floatRegex,
+                    "RESOLUTION": floatRegex,
+                    "ROTATION": rotationDict,
+                    "COLOR": colorDict,
+                    "COLOR_HEX": hexRegex
+                },
+                "CYLINDER": {
+                    "RADIUS": floatRegex,
+                    "DIAMETER": floatRegex,
+                    "RADIUS_BOTTOM": floatRegex,
+                    "RADIUS_TOP": floatRegex,
+                    "DIAMETER_BOTTOM": floatRegex,
+                    "DIAMETER_TOP": floatRegex,
+                    "POSITION": positionDict,
+                    "CENTER": boolRegex,
+                    "FRAGMENTS_ANGLE": floatRegex,
+                    "FRAGMENTS_SIZE": floatRegex,
+                    "RESOLUTION": floatRegex,
+                    "ROTATION": rotationDict,
+                    "COLOR": colorDict,
+                    "COLOR_HEX": hexRegex
+                },
+                "ENCIRCLEMENT": {
+                    "POSITION": positionDict,
+                    "OBJECT": varNameRegex,
+                    "WITH": varNameRegex,
+                    "AMOUNT": intRegex,
+                    "OFFSET_ANGLE": floatRegex,
+                    "OFFSET_COUNT": floatRegex
+                }
+            }
+        },
+        "int": intRegex,
+        "float": floatRegex,
+        "bool": boolRegex,
+        "str": "[\s\S]*",
+        "CONSTANT": {
+                varNameRegex: primitiveDict
+            }
+    },
+    "PLACE": {
+        "OBJECT": varNameRegex,
+        "X": floatRegex,
+        "Y": floatRegex,
+        "Z": floatRegex
+    },
+    "MOVE": {
+        "OBJECT": varNameRegex,
+        "X": floatRegex,
+        "Y": floatRegex,
+        "Z": floatRegex
+    },
+    "ROTATE": {
+        "OBJECT": varNameRegex,
+        "X": floatRegex,
+        "Y": floatRegex,
+        "Z": floatRegex,
+        "DEGREES": floatRegex,
+        "ROTATION_VECTOR": {
+            "X": floatRegex,
+            "Y": floatRegex,
+            "Z": floatRegex
+        }
+    },
+    "SURROUND": {
+        "OBJECT": varNameRegex,
+        "WITH": varNameRegex,
+        "X": floatRegex,
+        "Y": floatRegex,
+        "Z": floatRegex,
+        "AMOUNT": floatRegex,
+        "OFFSET_ANGLE": floatRegex,
+        "OFFSET_COUNT": floatRegex
+    }
+}
 
 class LexicalAnalyser:
     def __init__(self) -> None:
@@ -345,7 +347,6 @@ class SURROUND(OP):
                 AMOUNT: int,
                 OFFSET_ANGLE: float,
                 OFFSET_COUNT: float,
-                CENTER: bool
                 ) -> None:
 
         super().__init__(OBJECT, X, Y, Z)
@@ -353,7 +354,6 @@ class SURROUND(OP):
         self.AMOUNT = AMOUNT
         self.OFFSET_ANGLE = OFFSET_ANGLE
         self.OFFSET_COUNT = OFFSET_COUNT
-        self.CENTER = CENTER
 
 def to_or_regex(args: list) -> str:
     string = "|".join(args)
