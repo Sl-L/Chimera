@@ -133,7 +133,12 @@ LET BODY myEncirclement = ENCIRCLEMENT(
 )
 
 //Places <BODY> on the scene, allows the same <BODY> to be reused
-PLACE(OBJECT = <BODY>);
+PLACE(
+    OBJECT = <BODY>;
+    X = <float>,
+    Y = <float>,
+    Z = <float> 
+);
 
 MOVE(
     OBJECT = <BODY>,
