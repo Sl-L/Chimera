@@ -156,8 +156,22 @@ class LexicalAnalyser:
         if len(self.code) == 0:
             raise RuntimeError("Nothing to extract, code is empty")
         else:
-            commands = re.sub("\s+", " ", self.code).split(";")
-            self.commands = [list(filter(None, i.split(" "))) for i in commands]
+            commands = re.sub("[\s\)]+", " ", self.code).split(";")
+            commands = [i.split("(") for i in commands]
+            commands = [
+                    list(filter(None, i[0].split(" ")))
+                if len(i) == 1
+                else
+                    [
+                        list(filter(None, i[0].split(" "))),
+                        eval("{{ {0} }}".format(re.sub(r"\b([A-z][A-z0-9]*)", r"'\1'", i[1]).replace("\"'", "'").replace("'\"", "'").replace("=", ":")))
+                    ]
+                for i in commands]
+            
+            # for index, command in enumerate(commands):
+
+
+            self.commands = commands
     
     # def tokenize(self) -> None:
 
@@ -370,4 +384,9 @@ def to_or_regex(args: list) -> str:
 # nested_arg_regex: str = "([A-z]+)\s+=\s*\{([\s\S]*?)\},?"
 
 if __name__ == '__main__':
-    pass
+    a = LexicalAnalyser()
+    a.extract_source()
+    a.extract_commands()
+
+    for i in a.commands:
+        print(i)
