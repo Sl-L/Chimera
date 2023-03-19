@@ -163,7 +163,7 @@ ROTATE(
 //Shorthand for creating and placing an ENCIRCLEMENT
 SURROUND(
         OBJECT = <BODY>,
-        WITH = <BODY>,
+        TARGET = <BODY>,
         X = <float>,
         Y = <float>,
         Z = <float>
