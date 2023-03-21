@@ -132,11 +132,208 @@ tokens: dict = {
     }
 }
 
+class VAR:
+    def __init__(self, is_const: bool, vType: type, name: str, value) -> None:
+        self.is_const = is_const
+        self.vType = type
+        self.name = name
+        self.value = value
+    
+    def __add__(self, VAR):
+        return self.value + VAR.value
+    
+    def __mul__(self, VAR):
+        return self.value * VAR.value
+
+    def le__(self, value):
+        return self.value <= value
+        
+    def __pow__(self, value, mod):
+        return pow(self.value, value, mod)
+        
+    def __lt__(self, value):
+        return self.value < value
+        
+    def __mod__(self, value):
+        return self.value % value
+
+class BODY:
+    def __init__(self,
+                POSITION: dict ={'X': 0, 'Y': 0, 'Z': 0},
+                ROTATION: dict ={'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                COLOR: dict ={'COLOR_NAME': "", 'OPACITY': 1},
+                COLOR_HEX: int = 0
+                ) -> None:
+
+        self.POSITION: list = {
+            "X": POSITION['X'],
+            "Y": POSITION['Y'],
+            "Z": POSITION['Z']
+        }
+
+        self.ROTATION: dict = {
+            "X": ROTATION['X'],
+            "Y": ROTATION['Y'],
+            "Z": ROTATION['Z'],
+            "DEGREES": ROTATION['DEGREES'],
+            "ROTATION_VECTOR": {
+                "X": ROTATION['ROTATION_VECTOR']['X'],
+                "Y": ROTATION['ROTATION_VECTOR']['Y'],
+                "Z": ROTATION['ROTATION_VECTOR']['Z']
+            }
+        }
+
+        self.COLOR: dict = {
+            "COLOR_NAME": COLOR['COLOR_NAME'],
+            "OPACITY": COLOR['OPACITY']
+        }
+
+        self.COLOR_HEX: int = COLOR_HEX
+
+class CUBE(BODY):
+    def __init__(self,
+                POSITION: list ={'X': 0, 'Y': 0, 'Z': 0},
+                ROTATION: dict ={'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                COLOR: list ={'COLOR_NAME': "", 'OPACITY': 1},
+                SIDE: float = 0,
+                SIZE: list = {'X': 0, 'Y': 0, 'Z': 0},
+                CENTER: bool = True,
+                COLOR_HEX: int = True
+                ) -> None:
+
+        super().__init__(POSITION=POSITION, ROTATION=ROTATION, COLOR=COLOR, COLOR_HEX=COLOR_HEX)
+
+        self.SIDE: float = SIDE,
+        self.SIZE: list = {
+            "X": SIZE['X'],
+            "Y": SIZE['Y'],
+            "Z": SIZE['Z']
+        }
+        
+        self.CENTER: bool = CENTER
+
+class SPHERE(BODY):
+    def __init__(self,
+                POSITION: list ={'X': 0, 'Y': 0, 'Z': 0},
+                ROTATION: dict ={'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                COLOR: list ={'COLOR_NAME': "", 'OPACITY': 1},
+                RADIUS: float = 0,
+                DIAMETER: float = 0,
+                FRAGMENTS_ANGLE: float = 0,
+                FRAGMENTS_SIZE: float = 0,
+                RESOLUTION: int = 0,
+                COLOR_HEX: int = True
+                ) -> None:
+
+        super().__init__(self, POSITION=POSITION, ROTATION=ROTATION, COLOR=COLOR, COLOR_HEX=COLOR_HEX)
+
+        self.RADIUS: float = RADIUS
+        self.DIAMETER: float = DIAMETER
+
+        self.FRAGMENTS_ANGLE: float = FRAGMENTS_ANGLE
+        self.FRAGMENTS_SIZE: float = FRAGMENTS_SIZE
+        self.RESOLUTION: int = RESOLUTION
+
+class CYLINDER(SPHERE):
+    def __init__(self,
+                POSITION: list ={'X': 0, 'Y': 0, 'Z': 0},
+                ROTATION: dict ={'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                COLOR: list ={'COLOR_NAME': "", 'OPACITY': 1},
+                RADIUS: float = 0,
+                DIAMETER: float = 0,
+                FRAGMENTS_ANGLE: float = 0,
+                FRAGMENTS_SIZE: float = 0,
+                RESOLUTION: float = 0,
+                RADIUS_BOTTOM: float = 0,
+                RADIUS_TOP: float = 0,
+                DIAMETER_BOTTOM: float = 0,
+                DIAMETER_TOP: float = 0,
+                COLOR_HEX: int = True
+                ) -> None:
+
+        super().__init__(self, POSITION=POSITION, ROTATION=ROTATION, COLOR=COLOR,
+        RADIUS=RADIUS, DIAMETER=DIAMETER, FRAGMENTS_ANGLE=FRAGMENTS_ANGLE,
+        FRAGMENTS_SIZE=FRAGMENTS_SIZE, RESOLUTION=RESOLUTION, COLOR_HEX=COLOR_HEX)
+
+        self.RADIUS_BOTTOM: float = RADIUS_BOTTOM
+        self.RADIUS_TOP: float = RADIUS_TOP
+        self.DIAMETER_BOTTOM: float = DIAMETER_BOTTOM
+        self.DIAMETER_TOP: float = DIAMETER_TOP
+
+class ENCIRCLEMENT:
+    def __init__(self,
+                OBJECT=None,
+                WITH=None,
+                AMOUNT: int =0,
+                OFFSET_ANGLE: float =0,
+                OFFSET_COUNT: float =0
+                ) -> None:
+                
+        self.OBJECT = OBJECT
+        self.WITH = WITH
+        self.AMOUNT: int = AMOUNT
+        self.OFFSET_ANGLE: float = OFFSET_ANGLE
+        self.OFFSET_COUNT: float = OFFSET_COUNT
+
+class OP:
+    def __init__(self, OBJECT: BODY, X: float, Y: float, Z: float) -> None:
+        self.OBJECT = OBJECT
+        self.X = X
+        self.Y = Y
+        self.Z = Z
+
+class PLACE(OP):
+    def __init__(self, OBJECT: BODY, X: float, Y: float, Z: float) -> None:
+        super().__init__(OBJECT, X, Y, Z)
+
+class MOVE(OP):
+    def __init__(self,
+                OBJECT: BODY,
+                X: float,
+                Y: float,
+                Z: float
+                ) -> None:
+
+        super().__init__(OBJECT, X, Y, Z)
+
+class ROTATE(OP):
+    def __init__(self,
+                OBJECT: BODY,
+                X: float,
+                Y: float,
+                Z: float,
+                DEGREES: float,
+                ROTATION_VECTOR: dict
+                ) -> None:
+
+        super().__init__(OBJECT, X, Y, Z)
+        DEGREES = DEGREES
+        ROTATION_VECTOR = ROTATION_VECTOR
+
+class SURROUND(OP):
+    def __init__(self,
+                OBJECT: BODY,
+                X: float,
+                Y: float,
+                Z: float,
+                TARGET: BODY,
+                AMOUNT: int,
+                OFFSET_ANGLE: float,
+                OFFSET_COUNT: float,
+                ) -> None:
+
+        super().__init__(OBJECT, X, Y, Z)
+        self.TARGET = TARGET
+        self.AMOUNT = AMOUNT
+        self.OFFSET_ANGLE = OFFSET_ANGLE
+        self.OFFSET_COUNT = OFFSET_COUNT
+
 class LexicalAnalyser:
     def __init__(self) -> None:
         self.comment_regex: str = "(/\*[\s\S]*?\*/)|(\/\/.*)"
         self.code: str = str()
         self.commands: list = list()
+        self.ops: list = [[]]
 
     def extract_source(self, source: str="source.chimera") -> None:
         with open(source, 'r') as file:
@@ -167,207 +364,122 @@ class LexicalAnalyser:
                         eval("{{ {0} }}".format(re.sub(r"\b([A-z][A-z0-9]*)", r"'\1'", i[1]).replace("\"'", "'").replace("'\"", "'").replace("=", ":")))
                     ]
                 for i in commands]
-            
-            # for index, command in enumerate(commands):
-
 
             self.commands = commands
-    
-    # def tokenize(self) -> None:
 
-    # def lexical_analysis(self, sorce: str="source.chimera")
+    def verify_commands(self):
+        for index, i in enumerate(self.commands):
+            if len(i) == 0:
+                continue
+            elif type(i[0]) == str:
+                if i[0] not in {"CONSTANT", "LET"}:
+                    raise(SyntaxError(f"Unknown keyword '{i[0]}'"))
 
-class VAR:
-    def __init__(self, is_const: bool, vType: type, name: str, value) -> None:
-        self.is_const = is_const
-        self.vType = type
-        self.name = name
-        self.value = value
-    
-    def __add__(self, VAR):
-        return self.value + VAR.value
-    
-    def __mul__(self, VAR):
-        return self.value * VAR.value
-
-    def le__(self, value):
-        return self.value <= value
-        
-    def __pow__(self, value, mod):
-        return pow(self.value, value, mod)
-        
-    def __lt__(self, value):
-        return self.value < value
-        
-    def __mod__(self, value):
-        return self.value % value
-
-class BODY:
-    def __init__(self,
-                POSITION=[0, 0, 0],
-                ROTATION=[0, 0, 0, 0, [0, 0, 0]],
-                COLOR=["", 1, 0XFF_FF_FF]
-                ) -> None:
-
-        self.POSITION = {
-            "X": POSITION[0],
-            "Y": POSITION[1],
-            "Z": POSITION[2]
-        }
-
-        self.ROTATION = {
-            "X": ROTATION[0],
-            "Y": ROTATION[1],
-            "Z": ROTATION[2],
-            "DEGREES": ROTATION[3],
-            "ROTATION VECTOR": {
-                "X": ROTATION[4][0],
-                "Y": ROTATION[4][1],
-                "Z": ROTATION[4][2]
-            }
-        }
-
-        self.COLOR = {
-            "COLOR_NAME": COLOR[0],
-            "OPACITY": COLOR[1]
-        }
-
-        self.COLOR_HEX = COLOR[2]
-
-class CUBE(BODY):
-    def __init__(self,
-                POSITION=[0, 0, 0],
-                ROTATION=[0, 0, 0, 0, [0, 0, 0]],
-                COLOR=["", 1, 0XFF_FF_FF],
-                SIDE = 0,
-                SIZE = [0, 0, 0],
-                CENTER = True
-                ) -> None:
-
-        super().__init__(self, POSITION=POSITION, ROTATION=ROTATION, COLOR=COLOR)
-
-        self.SIDE = SIDE,
-        self.SIZE = {
-            "X": SIZE[0],
-            "Y": SIZE[1],
-            "Z": SIZE[2]
-        }
-        
-        self.CENTER = CENTER
-
-class SPHERE(BODY):
-    def __init__(self,
-                POSITION=[0, 0, 0],
-                ROTATION=[0, 0, 0, 0, [0, 0, 0]],
-                COLOR=["", 1, 0XFF_FF_FF],
-                RADIUS = 0,
-                DIAMETER = 0,
-                FRAGMENTS_ANGLE = 0,
-                FRAGMENTS_SIZE = 0,
-                RESOLUTION = 0
-                ) -> None:
-
-        super().__init__(self, POSITION=POSITION, ROTATION=ROTATION, COLOR=COLOR)
-
-        self.RADIUS = RADIUS
-        self.DIAMETER = DIAMETER
-
-        self.FRAGMENTS_ANGLE = FRAGMENTS_ANGLE
-        self.FRAGMENTS_SIZE = FRAGMENTS_SIZE
-        self.RESOLUTION = RESOLUTION
-
-class CYLINDER(SPHERE):
-    def __init__(self,
-                POSITION=[0, 0, 0],
-                ROTATION=[0, 0, 0, 0, [0, 0, 0]],
-                COLOR=["", 1, 0XFF_FF_FF],
-                RADIUS = 0,
-                DIAMETER = 0,
-                FRAGMENTS_ANGLE = 0,
-                FRAGMENTS_SIZE = 0,
-                RESOLUTION = 0,
-                RADIUS_BOTTOM = 0,
-                RADIUS_TOP = 0,
-                DIAMETER_BOTTOM = 0,
-                DIAMETER_TOP = 0
-                ) -> None:
-
-        super().__init__(self, POSITION=POSITION, ROTATION=ROTATION, COLOR=COLOR,
-        RADIUS=RADIUS, DIAMETER=DIAMETER, FRAGMENTS_ANGLE=FRAGMENTS_ANGLE,
-        FRAGMENTS_SIZE=FRAGMENTS_SIZE, RESOLUTION=RESOLUTION)
-
-        self.RADIUS_BOTTOM = RADIUS_BOTTOM
-        self.RADIUS_TOP = RADIUS_TOP
-        self.DIAMETER_BOTTOM = DIAMETER_BOTTOM
-        self.DIAMETER_TOP = DIAMETER_TOP
-
-class ENCIRCLEMENT:
-    def __init__(self,
-                OBJECT=None,
-                WITH=None,
-                AMOUNT=0,
-                OFFSET_ANGLE=0,
-                OFFSET_COUNT=0
-                ) -> None:
+                const = False
+                if len(i) != 5:
+                    raise(TypeError(f"Expected exactly 5 arguments, got {len(i)}"))
+                if i[0] == "CONSTANT":
+                    const = True
                 
-        self.OBJECT = OBJECT
-        self.WITH = WITH
-        self.AMOUNT = AMOUNT
-        self.OFFSET_ANGLE = OFFSET_ANGLE
-        self.OFFSET_COUNT = OFFSET_COUNT
+                self.ops.append([index, i[2], VAR(const, i[1], i[2], i[3])])
+            elif type(i[0] == list):
+                if i[0][0] in {"PLACE", "MOVE", "ROTATE", "SURROUND"}:
+                    if 'OBJECT' not in i[1]:
+                        raise(TypeError(f"Argument 'OBJECT' missing for {i[0][0]} operation"))
 
-class OP:
-    def __init__(self, OBJECT: BODY, X: float, Y: float, Z: float) -> None:
-        self.OBJECT = OBJECT
-        self.X = X
-        self.Y = Y
-        self.Z = Z
+                    if i[0][0] == "PLACE":
+                        self.ops.append([index, PLACE(
+                            OBJECT=i[1]['OBJECT'],
+                            X= i[1]['X'] if 'X' in i[1].keys() else 0,
+                            Y= i[1]['Y'] if 'Y' in i[1].keys() else 0,
+                            Z= i[1]['Z'] if 'Z' in i[1].keys() else 0)
+                            ])
 
-class PLACE(OP):
-    def __init__(self, OBJECT: BODY, X: float, Y: float, Z: float) -> None:
-        super().__init__(OBJECT, X, Y, Z)
+                    elif i[0][0] == "MOVE":
+                        self.ops.append([index, MOVE(
+                            OBJECT=i[1]['OBJECT'],
+                            X= i[1]['X'] if 'X' in i[1].keys() else 0,
+                            Y= i[1]['Y'] if 'Y' in i[1].keys() else 0,
+                            Z= i[1]['Z'] if 'Z' in i[1].keys() else 0)
+                            ])
+                    
+                    elif i[0][0] == "ROTATE":
+                        self.ops.append([index, ROTATE(
+                            OBJECT=i[1]['OBJECT'],
+                            X= i[1]['X'] if 'X' in i[1].keys() else 0,
+                            Y= i[1]['Y'] if 'Y' in i[1].keys() else 0,
+                            Z= i[1]['Z'] if 'Z' in i[1].keys() else 0,
+                            DEGREES= i[1]['DEGREES'] if 'DEGREES' in i[1].keys() else 0,
+                            ROTATION_VECTOR= i[1]['ROTATION_VECTOR'] if 'ROTATION_VECTOR' in i[1].keys() else 0)
+                            ])
 
-class MOVE(OP):
-    def __init__(self,
-                OBJECT: BODY,
-                X: float,
-                Y: float,
-                Z: float
-                ) -> None:
+                    elif i[0][0] == "SURROUND":
+                        self.ops.append([index, SURROUND(
+                            OBJECT=i[1]['OBJECT'],
+                            X= i[1]['X'] if 'X' in i[1].keys() else 0,
+                            Y= i[1]['Y'] if 'Y' in i[1].keys() else 0,
+                            Z= i[1]['Z'] if 'Z' in i[1].keys() else 0,
+                            TARGET= i[1]['TARGET'] if 'TARGET' in i[1].keys() else 0,
+                            AMOUNT= i[1]['AMOUNT'] if 'AMOUNT' in i[1].keys() else 0,
+                            OFFSET_ANGLE= i[1]['OFFSET_ANGLE'] if 'OFFSET_ANGLE' in i[1].keys() else 0,
+                            OFFSET_COUNT= i[1]['OFFSET_COUNT'] if 'OFFSET_COUNT' in i[1].keys() else 0)
+                            ])
 
-        super().__init__(OBJECT, X, Y, Z)
+                    else:
+                        raise(TypeError("This shouldn't had happened, like... how?"))
 
-class ROTATE(OP):
-    def __init__(self,
-                OBJECT: BODY,
-                X: float,
-                Y: float,
-                Z: float,
-                DEGREES: float,
-                ROTATION_VECTOR: list
-                ) -> None:
+                elif i[0][4] in {"CUBE", "SPHERE", "CYLINDER", "ENCIRCLEMENT"}:
+                    if i[0][4] == "CUBE":
+                        self.ops.append([index, i[0][2], CUBE(
+                            POSITION= i[1]["POSITION"] if 'POSITION' in i[1].keys() else {'X': 0, 'Y': 0, 'Z': 0},
+                            ROTATION= i[1]["ROTATION"] if 'ROTATION' in i[1].keys() else {'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                            COLOR= i[1]["COLOR"] if 'COLOR' in i[1].keys() else {'COLOR_NAME': "", 'OPACITY': 1},
+                            SIDE= i[1]["SIDE"] if 'SIDE' in i[1].keys() else 1,
+                            SIZE= i[1]["SIZE"] if 'SIZE' in i[1].keys() else {'X': 0, 'Y': 0, 'Z': 0},
+                            CENTER= i[1]["CENTER"] if 'CENTER' in i[1].keys() else True
+                        )])
 
-        super().__init__(OBJECT, X, Y, Z)
-        DEGREES = DEGREES
-        ROTATION_VECTOR = ROTATION_VECTOR
+                    elif i[0][4] == "SPHERE":
+                        self.ops.append([index, i[0][2], SPHERE(
+                            POSITION= i[1]["POSITION"] if 'POSITION' in i[1].keys() else {'X': 0, 'Y': 0, 'Z': 0},
+                            ROTATION= i[1]["ROTATION"] if 'ROTATION' in i[1].keys() else {'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                            COLOR= i[1]["COLOR"] if 'COLOR' in i[1].keys() else {'COLOR_NAME': "", 'OPACITY': 1},
+                            RADIUS= i[1]["RADIUS"] if 'RADIUS' in i[1].keys() else 0.5,
+                            DIAMETER= i[1]["DIAMETER"] if 'DIAMETER' in i[1].keys() else 1,
+                            FRAGMENTS_ANGLE= i[1]["FRAGMENTS_ANGLE"] if 'FRAGMENTS_ANGLE' in i[1].keys() else 1,
+                            FRAGMENTS_SIZE= i[1]["FRAGMENTS_SIZE"] if 'FRAGMENTS_SIZE' in i[1].keys() else 1,
+                            RESOLUTION= i[1]["RESOLUTION"] if 'RESOLUTION' in i[1].keys() else 300
+                        )])
 
-class SURROUND(OP):
-    def __init__(self,
-                OBJECT: BODY,
-                X: float,
-                Y: float,
-                Z: float,
-                WITH: BODY,
-                AMOUNT: int,
-                OFFSET_ANGLE: float,
-                OFFSET_COUNT: float,
-                ) -> None:
+                    elif i[0][4] == "CYLINDER":
+                        self.ops.append([index, i[0][2], CYLINDER(
+                            POSITION= i[1]["POSITION"] if 'POSITION' in i[1].keys() else {'X': 0, 'Y': 0, 'Z': 0},
+                            ROTATION= i[1]["ROTATION"] if 'ROTATION' in i[1].keys() else {'X': 0, 'Y': 1, 'Z': 0, 'DEGREES': 0, 'ROTATION_VECTOR': {'X': 0, 'Y': 0, 'Z': 0}},
+                            COLOR= i[1]["COLOR"] if 'COLOR' in i[1].keys() else {'COLOR_NAME': "", 'OPACITY': 1},
+                            RADIUS= i[1]["RADIUS"] if 'RADIUS' in i[1].keys() else 0.5,
+                            RADIUS_TOP= i[1]["RADIUS_TOP"] if 'RADIUS' in i[1].keys() else 0.5,
+                            RADIUS_BOTTOM= i[1]["RADIUS_BOTTOM"] if 'RADIUS' in i[1].keys() else 0.5,
+                            DIAMETER= i[1]["DIAMETER"] if 'DIAMETER' in i[1].keys() else 1,
+                            DIAMETER_TOP= i[1]["DIAMETER_TOP"] if 'DIAMETER' in i[1].keys() else 1,
+                            DIAMETER_BOTTOM= i[1]["DIAMETER_BOTTOM"] if 'DIAMETER' in i[1].keys() else 1,
+                            FRAGMENTS_ANGLE= i[1]["FRAGMENTS_ANGLE"] if 'FRAGMENTS_ANGLE' in i[1].keys() else 1,
+                            FRAGMENTS_SIZE= i[1]["FRAGMENTS_SIZE"] if 'FRAGMENTS_SIZE' in i[1].keys() else 1,
+                            RESOLUTION= i[1]["RESOLUTION"] if 'RESOLUTION' in i[1].keys() else 300
+                        )])
 
-        super().__init__(OBJECT, X, Y, Z)
-        self.WITH = WITH
-        self.AMOUNT = AMOUNT
-        self.OFFSET_ANGLE = OFFSET_ANGLE
-        self.OFFSET_COUNT = OFFSET_COUNT
+                    elif i[0][4] == "ENCIRCLEMENT":
+                        self.ops.append([index, i[0][2], ENCIRCLEMENT(
+                            OBJECT= i[1]["OBJECT"] if 'OBJECT' in i[1].keys() else None,
+                            WITH= i[1]["WITH"] if 'WITH' in i[1].keys() else None,
+                            AMOUNT= i[1]["AMOUNT"] if 'AMOUNT' in i[1].keys() else 0,
+                            OFFSET_ANGLE= i[1]["OFFSET_ANGLE"] if 'OFFSET_ANGLE' in i[1].keys() else 0,
+                            OFFSET_COUNT= i[1]["OFFSET_COUNT"] if 'OFFSET_COUNT' in i[1].keys() else 0,
+                        )])
+
+                    else:
+                        raise(TypeError("This shouldn't had happened, like... how? (2)"))
+
+
 
 def to_or_regex(args: list) -> str:
     string = "|".join(args)
@@ -387,6 +499,6 @@ if __name__ == '__main__':
     a = LexicalAnalyser()
     a.extract_source()
     a.extract_commands()
-
-    for i in a.commands:
+    a.verify_commands()
+    for i in a.ops:
         print(i)
