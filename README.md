@@ -1,2 +1,4 @@
-# Chimera
-A 3D description language that adds a bit of OOP to OpenSCAD, which it's transpiled into. Currently on pre-alpha state
+# Chimera (Pre-alpha)
+A solid object descriptor language meant to simplify the creation, and modification, of common objects.  
+The commands get transpiled into OpenSCAD code to then be compiled into a 3D object format.  
+Support for direct OpenSCAD 'injection' is planned.
